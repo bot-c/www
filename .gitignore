@@ -4,7 +4,6 @@
 .gem/*
 .gvm
 .rvm/*
-.nvm
 .pyenv/*
 .forever
 .bash_history
