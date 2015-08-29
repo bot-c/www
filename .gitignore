@@ -20,7 +20,6 @@
 .meteorsession
 .cache/*
 .nave/*
-.ssh/*
 *.com
 .selected_editor
 .forever
