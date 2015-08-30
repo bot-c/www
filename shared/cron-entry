@@ -1,0 +1,1 @@
+0 * * * *       [ -x /home/www/bin/runme ] && ( cd /home/www;./bin/runme ) >> /var/log/nginx/www-data-cron.log 2>&1 &

@@ -2,14 +2,21 @@
 DATE=`date`
 ROOT=/home/www
 LOG="$ROOT/log/run-forever.log"
+NEWAPP=""
 PID=""
 
-OLDforeverSite="www.cobjet.com www.alex2006hw.com www.mypigbank.com www.responsiblehuman.com www.zergut2012.com"
-sites="www.cobjet.com www.mypigbank.com www.responsiblehuman.com www.zergut2012.com"
+sites="
+www.2bees.com
+"
 
 echo "Starting forever check..." > $LOG
+
 for dirs in $sites; do
   PID=$(ps -ef |grep $app | grep forever | awk '{ print $2 }')
   app="$ROOT/$dirs"
-  ( (echo "checking $app...") && [ "$PID" == "" ] && [ -d "$app" ] && ( cd $app; echo "forever $app"; ./runme )) >> $LOG  &
+  NEWAPP=`grep "up-to-date"`
+  ( (echo "checking $app...") && \
+    [ "$PID" == "" ] && \
+    [ -d "$app" ] && \
+    ( cd $app; ( [[ -z "$NEWAPP" ]] && echo "Empty" || ./runme )) >> $LOG  &
 done

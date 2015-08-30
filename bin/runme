@@ -1,0 +1,24 @@
+#!/bin/bash
+DATE=`date`
+ROOT=/home/www
+LOG="$ROOT/log/runme.log"
+NEWAPP=""
+PID=""
+
+sites="
+www.2bees.com
+"
+
+echo "Starting check..." > $LOG
+
+for site in $sites; do
+  app="$ROOT/$site"
+  cd $app
+  PID=$(ps -ef |grep $app | grep forever | awk '{ print $2 }')
+  ( (echo "checking if $app is active") && [[ "$PID" == "" ]] && ./runme ) >> $LOG 2>&1
+
+  NEWAPP=`git pull | grep "up-to-date"`
+  ( (echo "checking git changes...") && \
+    [ -d "$app" ] && \
+    ( [[ -z "$NEWAPP" ]] && ./runme || echo "no change." ) >> $LOG  2>&1 &
+done
